@@ -1,0 +1,2363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StudioHouse Media | Los Angeles &amp; New York</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="shortcut icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ============================================================
+       CSS VARIABLES
+    ============================================================ */
+    :root {
+      --bg:          #F7F5F2;
+      --bg-alt:      #EEECEA;
+      --bg-dark:     #111214;
+      --text:        #1A1A1A;
+      --text-muted:  #6B6B6B;
+      --red:         #C8102E;
+      --red-dark:    #A50D25;
+      --navy:        #1E2B45;
+      --navy-light:  #2C3E5D;
+      --border:      #D8D4CF;
+      --white:       #FFFFFF;
+
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body:    'Inter', system-ui, sans-serif;
+
+      --radius:  4px;
+      --radius-lg: 8px;
+
+      --max-w: 1200px;
+      --section-pad: 96px;
+      --section-pad-sm: 60px;
+    }
+
+    /* ============================================================
+       RESET & BASE
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    /* ============================================================
+       TYPOGRAPHY
+    ============================================================ */
+    h1, h2, h3, h4 {
+      font-family: var(--font-display);
+      font-weight: 500;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+    }
+
+    .eyebrow {
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--red);
+      display: block;
+      margin-bottom: 14px;
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 500;
+      margin-bottom: 20px;
+      color: var(--text);
+    }
+
+    .section-lead {
+      font-size: 1.05rem;
+      line-height: 1.75;
+      color: var(--text-muted);
+      max-width: 560px;
+    }
+
+    /* ============================================================
+       BUTTONS
+    ============================================================ */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 28px;
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--red);
+      color: var(--white);
+    }
+    .btn-primary:hover { background: var(--red-dark); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(200,16,46,0.25); }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      border: 1.5px solid var(--border);
+    }
+    .btn-secondary:hover { border-color: var(--text); background: var(--text); color: var(--white); }
+
+    .btn-outline-white {
+      background: transparent;
+      color: var(--white);
+      border: 1.5px solid rgba(255,255,255,0.45);
+    }
+    .btn-outline-white:hover { background: var(--white); color: var(--text); }
+
+    .btn-ghost {
+      padding: 0;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: var(--red);
+      border: none;
+      background: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-ghost::after { content: '→'; transition: transform 0.2s; }
+    .btn-ghost:hover::after { transform: translateX(4px); }
+
+    /* ============================================================
+       FILMSTRIP DIVIDER — signature element
+    ============================================================ */
+    .filmstrip {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      overflow: hidden;
+      height: 18px;
+      margin: 0;
+    }
+
+    .filmstrip-frame {
+      width: 22px;
+      height: 18px;
+      border: 1.5px solid currentColor;
+      border-radius: 1px;
+      flex-shrink: 0;
+      opacity: 0.18;
+    }
+
+    .filmstrip-divider {
+      width: 100%;
+      color: var(--text);
+      margin: 0 0 0 0;
+      padding: 0;
+    }
+
+    /* ============================================================
+       NAVIGATION
+    ============================================================ */
+    .site-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      background: rgba(247,245,242,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      transition: box-shadow 0.3s;
+    }
+
+    .site-nav.scrolled {
+      box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      width: 184px;
+      line-height: 1;
+    }
+
+    .nav-logo-img {
+      width: 184px;
+      height: auto;
+      mix-blend-mode: multiply;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--text-muted);
+      transition: color 0.2s;
+      white-space: nowrap;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-cta {
+      margin-left: 16px;
+    }
+
+    /* Hamburger */
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .nav-toggle span {
+      display: block;
+      width: 24px;
+      height: 1.5px;
+      background: var(--text);
+      transition: all 0.3s;
+    }
+
+    .nav-mobile {
+      display: none;
+      flex-direction: column;
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      padding: 20px 32px 28px;
+      gap: 16px;
+    }
+    .nav-mobile.open { display: flex; }
+    .nav-mobile a {
+      font-size: 15px;
+      color: var(--text);
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-mobile .btn { margin-top: 8px; align-self: flex-start; }
+
+    /* ============================================================
+       HERO
+    ============================================================ */
+    .hero {
+      padding-top: 130px;
+      padding-bottom: 80px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+
+    .hero-kicker {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    .hero-kicker-line {
+      width: 40px;
+      height: 1.5px;
+      background: var(--red);
+    }
+
+    .hero-kicker-text {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--red);
+    }
+
+    .hero-headline {
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      font-weight: 500;
+      line-height: 1.1;
+      margin-bottom: 24px;
+      color: var(--text);
+    }
+
+    .hero-headline em {
+      font-style: italic;
+      color: var(--navy);
+    }
+
+    .hero-body {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: var(--text-muted);
+      margin-bottom: 36px;
+      max-width: 480px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 52px;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      padding-top: 36px;
+      border-top: 1px solid var(--border);
+    }
+
+    .hero-stat-num {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .hero-stat-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* Hero Visual */
+    .hero-visual {
+      position: relative;
+    }
+
+    .hero-visual-inner {
+      aspect-ratio: 4/5;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 36px;
+    }
+
+    .hero-visual-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 64% center;
+      mix-blend-mode: multiply;
+      -webkit-mask-image: radial-gradient(ellipse at center, #000 62%, transparent 100%);
+      mask-image: radial-gradient(ellipse at center, #000 62%, transparent 100%);
+    }
+
+    .hero-visual-inner::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(17,18,20,0.05) 0%, rgba(17,18,20,0.78) 100%);
+      pointer-events: none;
+    }
+
+    /* Film frame decoration */
+    .hero-visual-frames {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      display: flex;
+      padding: 16px;
+      gap: 6px;
+    }
+
+    .hero-visual-frame {
+      width: 36px;
+      height: 26px;
+      border: 1.5px solid rgba(255,255,255,0.12);
+      border-radius: 2px;
+    }
+
+    .hero-visual-overlay {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-visual-tagline {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      font-style: italic;
+      color: rgba(255,255,255,0.9);
+      line-height: 1.3;
+      margin-bottom: 16px;
+    }
+
+    .hero-visual-caption {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+    }
+
+    .hero-badge {
+      position: absolute;
+      top: 28px;
+      right: 28px;
+      z-index: 3;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255,255,255,0.2);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: rgba(200,16,46,0.12);
+    }
+
+    .hero-badge-num {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--white);
+      line-height: 1;
+    }
+
+    .hero-badge-label {
+      font-size: 8px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      text-align: center;
+      margin-top: 3px;
+    }
+
+    /* ============================================================
+       CREDIBILITY STRIP
+    ============================================================ */
+    .credibility-strip {
+      background: var(--navy);
+      padding: 48px 0;
+    }
+
+    .cred-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 2px;
+    }
+
+    .cred-item {
+      padding: 24px 28px;
+      border-right: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .cred-item:last-child { border-right: none; }
+
+    .cred-icon {
+      font-size: 20px;
+      margin-bottom: 10px;
+      color: var(--red);
+    }
+
+    .cred-val {
+      font-family: var(--font-display);
+      font-size: 1.7rem;
+      font-weight: 600;
+      color: var(--white);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .cred-label {
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.4;
+    }
+
+    /* ============================================================
+       APPROACH SECTION
+    ============================================================ */
+    .approach-section {
+      padding: var(--section-pad) 0;
+    }
+
+    .approach-inner {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .approach-left {
+      position: sticky;
+      top: 90px;
+    }
+
+    .approach-visual {
+      margin-top: 40px;
+      aspect-ratio: 16/9;
+      overflow: hidden;
+      border-radius: var(--radius-lg);
+    }
+
+    .approach-visual img,
+    .scripts-visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      mix-blend-mode: multiply;
+      -webkit-mask-image: radial-gradient(ellipse at center, #000 64%, transparent 100%);
+      mask-image: radial-gradient(ellipse at center, #000 64%, transparent 100%);
+    }
+
+    .approach-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .approach-step {
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: 20px;
+      padding: 28px 0;
+      border-bottom: 1px solid var(--border);
+      align-items: start;
+    }
+
+    .approach-step:first-child { border-top: 1px solid var(--border); }
+
+    .step-num {
+      font-family: var(--font-display);
+      font-size: 2.4rem;
+      font-weight: 300;
+      color: var(--border);
+      line-height: 1;
+      padding-top: 4px;
+    }
+
+    .step-content h3 {
+      font-size: 1.05rem;
+      font-weight: 500;
+      margin-bottom: 8px;
+      font-family: var(--font-body);
+    }
+
+    .step-content p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    /* ============================================================
+       SERVICES SECTION
+    ============================================================ */
+    .services-section {
+      padding: var(--section-pad) 0;
+      background: var(--bg-alt);
+    }
+
+    .services-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 56px;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+
+    .service-card {
+      background: var(--white);
+      padding: 36px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      transition: box-shadow 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--red);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+
+    .service-card:hover::before { transform: scaleX(1); }
+    .service-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.08); }
+
+    .service-icon {
+      font-size: 22px;
+      width: 46px;
+      height: 46px;
+      background: var(--bg-alt);
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .service-card h3 {
+      font-size: 1.2rem;
+      font-weight: 500;
+      line-height: 1.25;
+    }
+
+    .service-card p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      flex: 1;
+    }
+
+    /* ============================================================
+       WHO WE HELP
+    ============================================================ */
+    .who-section {
+      padding: var(--section-pad) 0;
+    }
+
+    .who-header {
+      text-align: center;
+      max-width: 660px;
+      margin: 0 auto 60px;
+    }
+
+    .who-header .section-lead {
+      max-width: none;
+      margin: 0 auto;
+    }
+
+    .who-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .who-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      transition: all 0.25s;
+    }
+
+    .who-card:hover {
+      border-color: var(--navy);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+    }
+
+    .who-card-role {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 500;
+      margin-bottom: 10px;
+      color: var(--text);
+    }
+
+    .who-card p {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    .who-card-tag {
+      display: inline-block;
+      margin-top: 14px;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--red);
+      border: 1px solid rgba(200,16,46,0.2);
+      padding: 3px 8px;
+      border-radius: 20px;
+    }
+
+    /* ============================================================
+       CLIENT FILMS
+    ============================================================ */
+    .films-section {
+      background: var(--bg-dark);
+      padding: var(--section-pad) 0;
+      overflow: hidden;
+    }
+
+    .films-header {
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto 56px;
+    }
+
+    .films-header .eyebrow { color: var(--red); }
+
+    .films-header .section-title { color: var(--white); }
+
+    .films-header p {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.7;
+    }
+
+    .films-marquee {
+      overflow: hidden;
+      position: relative;
+      margin-bottom: 28px;
+    }
+
+    .films-marquee::before,
+    .films-marquee::after {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0;
+      width: 80px;
+      z-index: 2;
+    }
+    .films-marquee::before { left: 0; background: linear-gradient(to right, var(--bg-dark), transparent); }
+    .films-marquee::after  { right: 0; background: linear-gradient(to left, var(--bg-dark), transparent); }
+
+    .films-track {
+      display: flex;
+      gap: 16px;
+      animation: marquee 30s linear infinite;
+      width: max-content;
+    }
+
+    .films-track-reverse {
+      animation-direction: reverse;
+      animation-duration: 38s;
+    }
+
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    .film-pill {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 20px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 40px;
+      white-space: nowrap;
+      color: rgba(255,255,255,0.7);
+      font-size: 13px;
+      font-weight: 400;
+    }
+
+    .film-pill-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--red);
+      flex-shrink: 0;
+    }
+
+    .films-disclaimer {
+      text-align: center;
+      font-size: 11px;
+      color: rgba(255,255,255,0.25);
+      margin-top: 36px;
+    }
+
+    /* ============================================================
+       PROOF / SUCCESS SECTION
+    ============================================================ */
+    .proof-section {
+      padding: var(--section-pad) 0;
+      background: var(--bg-alt);
+    }
+
+    .proof-inner {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .proof-visual {
+      border-radius: var(--radius-lg);
+      padding: 48px 40px;
+      position: relative;
+      overflow: hidden;
+      min-height: 460px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    .proof-visual-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 58% center;
+      mix-blend-mode: multiply;
+      -webkit-mask-image: radial-gradient(ellipse at center, #000 64%, transparent 100%);
+      mask-image: radial-gradient(ellipse at center, #000 64%, transparent 100%);
+    }
+
+    .proof-visual::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(17,18,20,0.08) 0%, rgba(17,18,20,0.86) 100%);
+      pointer-events: none;
+    }
+
+    .proof-quote {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      font-style: italic;
+      color: rgba(255,255,255,0.9);
+      line-height: 1.45;
+      position: relative;
+      z-index: 1;
+      margin-bottom: 28px;
+    }
+
+    .proof-quote::before {
+      content: '\201C';
+      font-size: 5rem;
+      color: rgba(200,16,46,0.25);
+      line-height: 0;
+      position: absolute;
+      top: 16px;
+      left: -8px;
+      font-family: var(--font-display);
+    }
+
+    .proof-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .proof-tag {
+      padding: 6px 14px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 20px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.6);
+      letter-spacing: 0.04em;
+    }
+
+    .proof-ctas {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-top: 36px;
+    }
+
+    .proof-ctas .btn {
+      align-self: flex-start;
+    }
+
+    /* ============================================================
+       DEVELOPMENT & FUNDING
+    ============================================================ */
+    .funding-section {
+      padding: var(--section-pad) 0;
+    }
+
+    .funding-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .funding-steps {
+      margin-top: 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .funding-step {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .funding-step-num {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(200,16,46,0.08);
+      border: 1.5px solid rgba(200,16,46,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--red);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .funding-step-text h4 {
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .funding-step-text p {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .funding-highlight {
+      background: var(--navy);
+      border-radius: var(--radius-lg);
+      padding: 44px 40px;
+      color: var(--white);
+      position: sticky;
+      top: 90px;
+      overflow: hidden;
+    }
+
+    .funding-highlight-img {
+      display: block;
+      width: calc(100% + 80px);
+      max-width: none;
+      margin: -44px -40px 34px;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      mix-blend-mode: screen;
+      opacity: 0.68;
+      -webkit-mask-image: linear-gradient(180deg, #000 62%, transparent 100%);
+      mask-image: linear-gradient(180deg, #000 62%, transparent 100%);
+    }
+
+    .funding-highlight h3 {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-style: italic;
+      color: var(--white);
+      margin-bottom: 20px;
+      line-height: 1.3;
+    }
+
+    .funding-highlight p {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.75;
+      margin-bottom: 28px;
+    }
+
+    .funding-highlight ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+
+    .funding-highlight li {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.8);
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .funding-highlight li::before {
+      content: '—';
+      color: var(--red);
+      flex-shrink: 0;
+    }
+
+    /* ============================================================
+       SCRIPT SALES
+    ============================================================ */
+    .scripts-section {
+      padding: var(--section-pad) 0;
+      background: var(--bg-alt);
+    }
+
+    .scripts-header-row {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 56px;
+      align-items: end;
+    }
+
+    .scripts-visual {
+      aspect-ratio: 16/9;
+      overflow: hidden;
+      border-radius: var(--radius-lg);
+    }
+
+    .scripts-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      margin-top: 56px;
+    }
+
+    .script-panel {
+      background: var(--white);
+      padding: 44px 40px;
+    }
+
+    .script-panel.dark {
+      background: var(--text);
+      color: var(--white);
+    }
+
+    .script-panel h3 {
+      font-size: 1.4rem;
+      font-weight: 500;
+      margin-bottom: 14px;
+      line-height: 1.25;
+    }
+
+    .script-panel.dark h3 { color: var(--white); }
+
+    .script-panel p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.75;
+      margin-bottom: 24px;
+    }
+
+    .script-panel.dark p { color: rgba(255,255,255,0.55); }
+
+    .script-panel ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 32px;
+    }
+
+    .script-panel li {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .script-panel.dark li { color: rgba(255,255,255,0.65); }
+
+    .script-panel li::before {
+      content: '';
+      width: 16px;
+      height: 1.5px;
+      background: var(--red);
+      flex-shrink: 0;
+    }
+
+    /* ============================================================
+       ACTORS / TALENT
+    ============================================================ */
+    .actors-section {
+      padding: var(--section-pad) 0;
+    }
+
+    .actors-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .actors-benefits {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 36px;
+    }
+
+    .actor-benefit {
+      padding: 24px 22px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      transition: border-color 0.2s;
+    }
+
+    .actor-benefit:hover { border-color: var(--navy); }
+
+    .actor-benefit-icon { font-size: 20px; margin-bottom: 10px; }
+
+    .actor-benefit h4 {
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .actor-benefit p {
+      font-size: 0.825rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .actors-visual {
+      background: linear-gradient(135deg, #1E2B45 0%, #111214 100%);
+      border-radius: var(--radius-lg);
+      padding: 48px 40px;
+      position: sticky;
+      top: 90px;
+      overflow: hidden;
+    }
+
+    .actors-visual-img {
+      display: block;
+      width: calc(100% + 80px);
+      max-width: none;
+      margin: -48px -40px 34px;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      object-position: 60% center;
+      mix-blend-mode: screen;
+      opacity: 0.7;
+      -webkit-mask-image: linear-gradient(180deg, #000 64%, transparent 100%);
+      mask-image: linear-gradient(180deg, #000 64%, transparent 100%);
+    }
+
+    .actors-visual-headline {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-style: italic;
+      color: var(--white);
+      line-height: 1.3;
+      margin-bottom: 24px;
+    }
+
+    .actors-visual-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+
+    .actors-visual-list li {
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.65);
+      padding-left: 18px;
+      position: relative;
+      line-height: 1.5;
+    }
+
+    .actors-visual-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 8px;
+      width: 6px;
+      height: 6px;
+      background: var(--red);
+      border-radius: 50%;
+    }
+
+    /* ============================================================
+       CONTACT
+    ============================================================ */
+    .contact-section {
+      padding: var(--section-pad) 0;
+      background: var(--bg-dark);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(17,18,20,0.94) 0%, rgba(17,18,20,0.78) 44%, rgba(17,18,20,0.45) 100%),
+        url('assets/contact-section.png') center / cover no-repeat;
+      opacity: 0.9;
+      -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 12%, #000 88%, transparent 100%);
+      mask-image: linear-gradient(180deg, transparent 0%, #000 12%, #000 88%, transparent 100%);
+    }
+
+    .contact-inner {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 80px;
+      align-items: start;
+      position: relative;
+      z-index: 1;
+    }
+
+    .contact-info { color: var(--white); }
+
+    .contact-info .eyebrow { color: var(--red); }
+
+    .contact-info .section-title { color: var(--white); }
+
+    .contact-info .section-lead {
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 40px;
+    }
+
+    .contact-details {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .contact-detail {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+
+    .contact-detail-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    .contact-detail-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .contact-detail-label {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 2px;
+    }
+
+    .contact-detail-val {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.8);
+    }
+
+    /* Contact Form */
+    .contact-form {
+      background: var(--bg);
+      border-radius: var(--radius-lg);
+      padding: 44px 40px;
+    }
+
+    .contact-form h3 {
+      font-size: 1.2rem;
+      font-weight: 500;
+      margin-bottom: 28px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      font-family: var(--font-body);
+      font-size: 14px;
+      color: var(--text);
+      background: var(--white);
+      transition: border-color 0.2s;
+      outline: none;
+      width: 100%;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--navy);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 110px;
+    }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    .site-footer {
+      background: #0D0F11;
+      padding: 72px 0 40px;
+      color: rgba(255,255,255,0.6);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 64px;
+    }
+
+    .footer-brand-name {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+
+    .footer-brand-sub {
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      margin-bottom: 18px;
+    }
+
+    .footer-brand-desc {
+      font-size: 13px;
+      line-height: 1.75;
+      color: rgba(255,255,255,0.45);
+      max-width: 280px;
+    }
+
+    .footer-logo {
+      width: min(280px, 100%);
+      margin-bottom: 18px;
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 10px 12px;
+    }
+
+    .footer-col h4 {
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 18px;
+    }
+
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .footer-col li a {
+      font-size: 13px;
+      color: rgba(255,255,255,0.5);
+      transition: color 0.2s;
+    }
+
+    .footer-col li a:hover { color: var(--white); }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding-top: 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .footer-copy {
+      font-size: 12px;
+      color: rgba(255,255,255,0.25);
+    }
+
+    .footer-imdb {
+      font-size: 12px;
+      color: rgba(255,255,255,0.35);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s;
+    }
+
+    .footer-imdb:hover { color: var(--white); }
+
+    /* ============================================================
+       UTILITIES
+    ============================================================ */
+    .text-center { text-align: center; }
+    .mt-8  { margin-top: 8px; }
+    .mt-16 { margin-top: 16px; }
+    .mt-24 { margin-top: 24px; }
+    .mt-32 { margin-top: 32px; }
+    .mt-40 { margin-top: 40px; }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 1024px) {
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .cred-grid { grid-template-columns: repeat(3, 1fr); }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      :root {
+        --section-pad: var(--section-pad-sm);
+      }
+
+      .container { padding: 0 20px; }
+
+      .nav-links, .nav-cta { display: none; }
+      .nav-toggle { display: flex; }
+      .nav-logo, .nav-logo-img { width: 156px; }
+
+      .hero { padding-top: 100px; }
+      .hero-grid { grid-template-columns: 1fr; gap: 48px; }
+      .hero-visual { order: -1; }
+      .hero-visual-inner { aspect-ratio: 16/9; }
+      .hero-stats { grid-template-columns: 1fr 1fr; }
+
+      .cred-grid { grid-template-columns: 1fr 1fr; }
+
+      .approach-inner,
+      .funding-inner,
+      .scripts-grid,
+      .scripts-header-row,
+      .actors-inner,
+      .proof-inner,
+      .contact-inner { grid-template-columns: 1fr; gap: 48px; }
+
+      .approach-left { position: static; }
+      .funding-highlight { position: static; }
+      .actors-visual { position: static; }
+
+      .form-row { grid-template-columns: 1fr; }
+
+      .services-grid { grid-template-columns: 1fr; }
+      .who-grid { grid-template-columns: 1fr; }
+      .actors-benefits { grid-template-columns: 1fr; }
+
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .films-track { animation: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       NAVIGATION
+  ============================================================ -->
+  <nav class="site-nav" id="site-nav">
+    <div class="nav-inner">
+      <a href="#home" class="nav-logo">
+        <img class="nav-logo-img" src="assets/studio-house-logo.png" alt="Studio House Los Angeles and New York" />
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#approach">Our Approach</a></li>
+        <li><a href="#services">Consulting</a></li>
+        <li><a href="#funding">Development</a></li>
+        <li><a href="#scripts">Scripts</a></li>
+        <li><a href="#actors">Actors</a></li>
+        <li><a href="#films">Client Work</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+
+      <a href="#contact" class="btn btn-primary nav-cta">Request a Consultation</a>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+    <div class="nav-mobile" id="nav-mobile">
+      <a href="#approach">Our Approach</a>
+      <a href="#services">Industry Consulting</a>
+      <a href="#funding">Development &amp; Funding</a>
+      <a href="#scripts">Script Sales</a>
+      <a href="#actors">Actors &amp; Talent</a>
+      <a href="#films">Client Work</a>
+      <a href="#contact">Contact</a>
+      <a href="#contact" class="btn btn-primary">Request a Consultation</a>
+    </div>
+  </nav>
+
+  <!-- ============================================================
+       HERO
+  ============================================================ -->
+  <section class="hero" id="home">
+    <div class="container">
+      <div class="hero-grid">
+        <!-- Left: Copy -->
+        <div class="hero-content">
+          <div class="hero-kicker">
+            <div class="hero-kicker-line"></div>
+            <span class="hero-kicker-text">Media &amp; Project Development Consulting</span>
+          </div>
+
+          <h1 class="hero-headline">
+            Helping Emerging Professionals Build Recognition, Develop Projects, and Access <em>Opportunity</em>
+          </h1>
+
+          <p class="hero-body">
+            StudioHouse Media is a consulting and promotional firm based in Los Angeles and New York. We work with producers, directors, writers, actors, and entertainment professionals to raise name recognition, develop projects, raise funding, and create stronger positioning — through a unique, non-standard approach with a proven track record.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#contact" class="btn btn-primary">Request a Consultation</a>
+            <a href="#approach" class="btn btn-secondary">Explore Our Approach</a>
+          </div>
+
+          <div class="hero-stats">
+            <div>
+              <div class="hero-stat-num">3</div>
+              <div class="hero-stat-label">Academy Award-recognized projects</div>
+            </div>
+            <div>
+              <div class="hero-stat-num">300+</div>
+              <div class="hero-stat-label">Feature films and TV show credits from client alumni</div>
+            </div>
+            <div>
+              <div class="hero-stat-num">30+</div>
+              <div class="hero-stat-label">Years of media industry experience</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Visual -->
+        <div class="hero-visual">
+          <div class="hero-visual-inner">
+            <img class="hero-visual-img" src="assets/hero-banner.png" alt="Studio desk with film equipment overlooking New York at night" />
+
+            <!-- Badge -->
+            <div class="hero-badge">
+              <span class="hero-badge-num">LA</span>
+              <span class="hero-badge-label">New York</span>
+            </div>
+
+            <!-- Caption block -->
+            <div class="hero-visual-overlay">
+              <p class="hero-visual-tagline">Where industry access meets emerging talent.</p>
+              <p class="hero-visual-caption">StudioHouse Media · Est. Los Angeles</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CREDIBILITY STRIP
+  ============================================================ -->
+  <section class="credibility-strip">
+    <div class="container">
+      <div class="cred-grid">
+        <div class="cred-item">
+          <div class="cred-icon">🏆</div>
+          <div class="cred-val">3</div>
+          <div class="cred-label">Academy Award–recognized projects sheltered under our roof</div>
+        </div>
+        <div class="cred-item">
+          <div class="cred-icon">🎬</div>
+          <div class="cred-val">2</div>
+          <div class="cred-label">Sundance recognition milestones for client-connected projects</div>
+        </div>
+        <div class="cred-item">
+          <div class="cred-icon">🎭</div>
+          <div class="cred-val">300+</div>
+          <div class="cred-label">Feature film and TV show credits from client alumni</div>
+        </div>
+        <div class="cred-item">
+          <div class="cred-icon">💼</div>
+          <div class="cred-val">6–7</div>
+          <div class="cred-label">Figure funding raised for producer clients, often rapidly</div>
+        </div>
+        <div class="cred-item">
+          <div class="cred-icon">🌎</div>
+          <div class="cred-val">Global</div>
+          <div class="cred-label">Long-term relationships with media decision-makers worldwide</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       OUR APPROACH
+  ============================================================ -->
+  <section class="approach-section" id="approach">
+    <div class="container">
+      <div class="approach-inner">
+
+        <div class="approach-left">
+          <span class="eyebrow">Our Approach</span>
+          <h2 class="section-title">A Different Way to Build Media Visibility and Project Momentum</h2>
+          <p class="section-lead">
+            Our team works as media career and business development consultants. Our way of working is highly non-standard — and so is our success metric. We focus on what we call "future famous" actors, writers, directors, DPs, producers, and service providers.
+          </p>
+          <p class="section-lead mt-24" style="color: var(--text-muted); font-size: 0.9rem; max-width: 480px; margin-top: 20px;">
+            Script writing contests, bulk emails, poorly formatted materials, and blind submissions to strangers are rarely successful. Our unique PR and promotions approach generates decision-maker access, media attention, and career advancement — often in a remarkably short period of time.
+          </p>
+          <a href="#contact" class="btn btn-primary mt-40" style="margin-top: 36px;">See How We Work</a>
+          <div class="approach-visual">
+            <img src="assets/our-approach.png" alt="Strategy workspace with project notes and a development workflow" />
+          </div>
+        </div>
+
+        <div class="approach-steps">
+          <div class="approach-step">
+            <div class="step-num">01</div>
+            <div class="step-content">
+              <h3>Strategic Evaluation</h3>
+              <p>Every engagement begins with an initial strategic evaluation of all issues and all materials related to meeting your stated objectives. We understand where you are, what you have, and where you need to go.</p>
+            </div>
+          </div>
+          <div class="approach-step">
+            <div class="step-num">02</div>
+            <div class="step-content">
+              <h3>Identify the Right Path</h3>
+              <p>We know who's looking for specific ideas, who's looking for fresh styles, who's looking for niche-specific materials — and who's looking for their next possible project. We identify the optimal visibility or development path for your work.</p>
+            </div>
+          </div>
+          <div class="approach-step">
+            <div class="step-num">03</div>
+            <div class="step-content">
+              <h3>Build Targeted Recognition</h3>
+              <p>Using our unique PR and promotions approach, we help raise name recognition and funding by connecting you with those who are in a position to option, buy, greenlight, or invest — not random contacts, but the right people at the right time.</p>
+            </div>
+          </div>
+          <div class="approach-step">
+            <div class="step-num">04</div>
+            <div class="step-content">
+              <h3>Support Your Objective</h3>
+              <p>Whether your goal is a script sale, funding round, agent relationship, or career breakthrough, we work alongside you to support your project, talent positioning, or funding objective through to completion.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SERVICES
+  ============================================================ -->
+  <section class="services-section" id="services">
+    <div class="container">
+      <div class="services-header">
+        <div>
+          <span class="eyebrow">What We Do</span>
+          <h2 class="section-title">What StudioHouse Media Helps With</h2>
+        </div>
+        <p style="font-size: 0.9rem; color: var(--text-muted); max-width: 360px; line-height: 1.7;">
+          From emerging talent to experienced industry professionals, our consulting spans the full spectrum of media industry needs.
+        </p>
+      </div>
+
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon">🎯</div>
+          <h3>Media Industry Consulting</h3>
+          <p>Strategic industry guidance for producers, directors, writers, and media professionals. We help you understand your current position and identify the most effective path forward in a competitive industry.</p>
+          <a href="#contact" class="btn-ghost">Get Guidance</a>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">💰</div>
+          <h3>Development &amp; Funding</h3>
+          <p>Support for project development, funding preparation, positioning, and opportunity creation. We've helped serious-tier producers raise six and seven figures in production, completion, distribution, and promotion funding.</p>
+          <a href="#funding" class="btn-ghost">Learn More</a>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">📝</div>
+          <h3>Script Sales Support</h3>
+          <p>Guidance and direct-access support for writers looking to position, option, or sell scripts. We get scripts directly into the hands of industry decision-makers — not through contests or bulk submissions.</p>
+          <a href="#scripts" class="btn-ghost">Learn More</a>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">🎬</div>
+          <h3>Actors &amp; Career Professionals</h3>
+          <p>We help actor clients sign with strong agents and managers. Some of our past clients are now major A-list stars. We help good actors sign agents and managers, and book Feature Films, TV Shows, Soaps, and Commercials.</p>
+          <a href="#actors" class="btn-ghost">Learn More</a>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">🤝</div>
+          <h3>Talent Agencies &amp; Managers</h3>
+          <p>We help managers and talent agents increase revenue by identifying and developing individuals who are most talented and best prepared for real success. We help skilled creatives meet great agents — and help great agents increase income.</p>
+          <a href="#contact" class="btn-ghost">Discuss Needs</a>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">📺</div>
+          <h3>Celebrity &amp; Media Visibility</h3>
+          <p>Support around media visibility, talk show positioning, and public-facing opportunities. Our approach helps generate media attention and increased career momentum — often in a remarkably short period of time.</p>
+          <a href="#contact" class="btn-ghost">Explore Options</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       WHO WE HELP
+  ============================================================ -->
+  <section class="who-section" id="who">
+    <div class="container">
+      <div class="who-header">
+        <span class="eyebrow">Who We Serve</span>
+        <h2 class="section-title">Built for Emerging and Established Entertainment Professionals</h2>
+        <p class="section-lead">
+          Our little incubator in the hills above LA has helped shelter and nurture talent and projects across every corner of the entertainment industry.
+        </p>
+      </div>
+
+      <div class="who-grid">
+        <div class="who-card">
+          <div class="who-card-role">Producers</div>
+          <p>Raise funding for film projects, create decision-maker access, and develop production momentum with a unique PR and promotions approach that actually moves the needle.</p>
+          <span class="who-card-tag">Development &amp; Funding</span>
+        </div>
+
+        <div class="who-card">
+          <div class="who-card-role">Directors</div>
+          <p>Build industry visibility, create stronger positioning for your body of work, and connect with producers, financiers, and studios who are actively looking for your type of project.</p>
+          <span class="who-card-tag">Visibility &amp; Access</span>
+        </div>
+
+        <div class="who-card">
+          <div class="who-card-role">Writers</div>
+          <p>Position scripts more effectively, improve how your work is presented, and get treatments, scripts, and book projects into the hands of major industry decision-makers who are ready to read them.</p>
+          <span class="who-card-tag">Script Sales</span>
+        </div>
+
+        <div class="who-card">
+          <div class="who-card-role">Actors</div>
+          <p>Sign with strong agents and managers, book major Feature Films, TV Shows, Soaps, and National Commercials. We have an amazing eye for future famous newcomers — and the relationships to back it up.</p>
+          <span class="who-card-tag">Career Representation</span>
+        </div>
+
+        <div class="who-card">
+          <div class="who-card-role">Talent Agencies</div>
+          <p>Significantly increase income by identifying and developing the individuals most talented and best prepared for success. We help great agents access a stronger pipeline of prepared, motivated talent.</p>
+          <span class="who-card-tag">Agency Growth</span>
+        </div>
+
+        <div class="who-card">
+          <div class="who-card-role">Independent Filmmakers</div>
+          <p>Some of the top-grossing films and franchises of the past thirty years were first brainstormed under our roof by then-unknown newcomers. We help you move from concept to credibility.</p>
+          <span class="who-card-tag">Project Development</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CLIENT FILMS  
+  ============================================================ -->
+  <section class="films-section" id="films">
+    <div class="container">
+      <div class="films-header">
+        <span class="eyebrow">Client &amp; Project References</span>
+        <h2 class="section-title">A Track Record Across Film and Television</h2>
+        <p>Selected industry references associated with StudioHouse Media clients and project history. Credits represent client associations and publicly referenced project connections.</p>
+      </div>
+    </div>
+
+    <!-- Row 1 -->
+    <div class="films-marquee">
+      <div class="films-track">
+        <div class="film-pill"><span class="film-pill-dot"></span>Passion of the Christ</div>
+        <div class="film-pill"><span class="film-pill-dot"></span>Sound of Freedom</div>
+        <div class="film-pill"><span class="film-pill-dot"></span>The Crow</div>
+        <div class="film-pill"><span class="film-pill-dot"></span>My Own Private Idaho</div>
+        <div class="film-pill"><span class="film-pill-dot"></span>Fried Green Tomatoes</div>
+        <div class="film-pill"><span class="film-pill-dot"></span>The Handmaid's Tale</div>
+        <div class="film-pill"><span class="film-pill-dot"></span>Person of Interest</div>
+        <div class="film-pill"><span class="film-pill-dot"></span>Children of the Corn</div>
+        <div class="film-pill"><span class="film-pill-dot"></span>Razor's Edge</div>
+        <div class="film-pill"><span class="film-pill-dot"></span>Amos &amp; Andrew</div>
+        <!-- Duplicate for seamless loop -->
+        <div class="film-pill"><span class="film-pill-dot"></span>Passion of the Christ</div>
+        <div class="film-pill"><span class="film-pill-dot"></span>Sound of Freedom</div>
+        <div class="film-pill"><span class="film-pill-dot"></span>The Crow</div>
+        <div class="film-pill"><span class="film-pill-dot"></span>My Own Private Idaho</div>
+        <div class="film-pill"><span class="film-pill-dot"></span>Fried Green Tomatoes</div>
+        <div class="film-pill"><span class="film-pill-dot"></span>The Handmaid's Tale</div>
+        <div class="film-pill"><span class="film-pill-dot"></span>Person of Interest</div>
+        <div class="film-pill"><span class="film-pill-dot"></span>Children of the Corn</div>
+        <div class="film-pill"><span class="film-pill-dot"></span>Razor's Edge</div>
+        <div class="film-pill"><span class="film-pill-dot"></span>Amos &amp; Andrew</div>
+      </div>
+    </div>
+
+    <!-- Row 2 -->
+    <div class="films-marquee">
+      <div class="films-track films-track-reverse">
+        <div class="film-pill"><span class="film-pill-dot"></span>Simple Justice</div>
+        <div class="film-pill"><span class="film-pill-dot"></span>Hellraiser III</div>
+        <div class="film-pill"><span class="film-pill-dot"></span>An Innocent Cry</div>
+        <div class="film-pill"><span class="film-pill-dot"></span>Kellogg's</div>
+        <div class="film-pill"><span class="film-pill-dot"></span>McDonald's</div>
+        <div class="film-pill"><span class="film-pill-dot"></span>Apple Computers</div>
+        <div class="film-pill"><span class="film-pill-dot"></span>Nintendo</div>
+        <div class="film-pill"><span class="film-pill-dot"></span>Ford Trucks</div>
+        <div class="film-pill"><span class="film-pill-dot"></span>AT&amp;T</div>
+        <div class="film-pill"><span class="film-pill-dot"></span>CNN</div>
+        <div class="film-pill"><span class="film-pill-dot"></span>Microsoft</div>
+        <!-- Duplicate -->
+        <div class="film-pill"><span class="film-pill-dot"></span>Simple Justice</div>
+        <div class="film-pill"><span class="film-pill-dot"></span>Hellraiser III</div>
+        <div class="film-pill"><span class="film-pill-dot"></span>An Innocent Cry</div>
+        <div class="film-pill"><span class="film-pill-dot"></span>Kellogg's</div>
+        <div class="film-pill"><span class="film-pill-dot"></span>McDonald's</div>
+        <div class="film-pill"><span class="film-pill-dot"></span>Apple Computers</div>
+        <div class="film-pill"><span class="film-pill-dot"></span>Nintendo</div>
+        <div class="film-pill"><span class="film-pill-dot"></span>Ford Trucks</div>
+        <div class="film-pill"><span class="film-pill-dot"></span>AT&amp;T</div>
+        <div class="film-pill"><span class="film-pill-dot"></span>CNN</div>
+        <div class="film-pill"><span class="film-pill-dot"></span>Microsoft</div>
+      </div>
+    </div>
+
+    <p class="films-disclaimer">Selected references based on publicly listed StudioHouse Media client and project history. StudioHouse Media does not claim production ownership or credit for listed titles unless explicitly stated.</p>
+  </section>
+
+  <!-- ============================================================
+       PROOF / SUCCESS
+  ============================================================ -->
+  <section class="proof-section" id="proof">
+    <div class="container">
+      <div class="proof-inner">
+
+        <div class="proof-visual">
+          <img class="proof-visual-img" src="assets/client-success.png" alt="Gallery of film work and award trophies representing client success" />
+          <p class="proof-quote">
+            Some of the top-grossing films and franchises of the past thirty years were first brainstormed by then-unknown newcomers under our roof.
+          </p>
+          <div class="proof-tags">
+            <span class="proof-tag">Academy Award Recognition</span>
+            <span class="proof-tag">Sundance Success</span>
+            <span class="proof-tag">A-List Alumni</span>
+            <span class="proof-tag">6–7 Figure Funding</span>
+            <span class="proof-tag">International Festivals</span>
+          </div>
+        </div>
+
+        <div>
+          <span class="eyebrow">Results &amp; Industry Track Record</span>
+          <h2 class="section-title">Real Client Outcomes Across the Industry</h2>
+          <p class="section-lead">
+            Our unique incubator approach has helped shelter and nurture three Academy Awards, two Sundance recognitions, and numerous international film festival awards. The actors we've helped launch have gone on to speaking roles in over 300 Feature Films and TV Shows — some now as major A-list stars.
+          </p>
+
+          <div class="proof-ctas">
+            <a href="https://studiohousemedia.com" target="_blank" rel="noopener" class="btn btn-primary">View Client Success Stories</a>
+            <a href="https://www.imdb.com" target="_blank" rel="noopener" class="btn btn-secondary">View IMDb Profile</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       DEVELOPMENT & FUNDING
+  ============================================================ -->
+  <section class="funding-section" id="funding">
+    <div class="container">
+      <div class="funding-inner">
+
+        <div>
+          <span class="eyebrow">Development &amp; Funding</span>
+          <h2 class="section-title">Project Development and Funding Support for Media Professionals</h2>
+          <p class="section-lead" style="margin-bottom: 0;">
+            Raising capital is never a problem — unless you have no money and no one knows your name or your work. We've broken the project funding success code.
+          </p>
+
+          <div class="funding-steps">
+            <div class="funding-step">
+              <div class="funding-step-num">1</div>
+              <div class="funding-step-text">
+                <h4>Project Review</h4>
+                <p>We evaluate your project, materials, current positioning, and funding readiness. We identify gaps and opportunities before any outreach begins.</p>
+              </div>
+            </div>
+            <div class="funding-step">
+              <div class="funding-step-num">2</div>
+              <div class="funding-step-text">
+                <h4>Positioning &amp; Materials</h4>
+                <p>Weak crowdfunding campaigns, bulk emails, and blind submissions are a failure game 95% of the time. We prepare your project materials for the right rooms.</p>
+              </div>
+            </div>
+            <div class="funding-step">
+              <div class="funding-step-num">3</div>
+              <div class="funding-step-text">
+                <h4>Visibility Strategy</h4>
+                <p>Our unique PR and promotions approach dramatically increases the funding success metric by making you and your project visible to those with the ability to invest or greenlight.</p>
+              </div>
+            </div>
+            <div class="funding-step">
+              <div class="funding-step-num">4</div>
+              <div class="funding-step-text">
+                <h4>Funding &amp; Development Support</h4>
+                <p>We've helped serious-tier producers raise six and seven figures virtually overnight in production, completion, distribution, and promotion funding. We may be in a very interesting position to help you do the same.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="funding-highlight">
+          <img class="funding-highlight-img" src="assets/development-funding.png" alt="Development and funding planning desk with project materials and analytics" />
+          <h3>We've Broken the Project Funding Success Code.</h3>
+          <p>
+            Our unique PR and promotions approach helps generate project funding, decision-maker access, media attention, career advancement, and increased business — often in a remarkably short period of time.
+          </p>
+          <ul>
+            <li>Six and seven-figure funding for qualifying producers</li>
+            <li>Production, completion, distribution &amp; promotion funding paths</li>
+            <li>Access to media decision-makers worldwide</li>
+            <li>Positioning and materials preparation support</li>
+            <li>Non-standard approach with a proven track record</li>
+          </ul>
+          <a href="#contact" class="btn btn-primary">Discuss Your Project</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SCRIPT SALES
+  ============================================================ -->
+  <section class="scripts-section" id="scripts">
+    <div class="container">
+      <div class="scripts-header-row">
+        <div>
+          <span class="eyebrow">Script Sales &amp; Story Development</span>
+          <h2 class="section-title" style="max-width: 600px;">Support for Writers, Scripts, and Story-Driven Projects</h2>
+        </div>
+        <div class="scripts-visual">
+          <img src="assets/script-sales.png" alt="Screenplay desk with scripts, notes, and story development materials" />
+        </div>
+      </div>
+
+      <div class="scripts-grid">
+        <div class="script-panel">
+          <h3>How We Help Writers Get Their Work Seen</h3>
+          <p>
+            StudioHouse Media helps writers and project owners improve how their scripts and stories are positioned, presented, and introduced to relevant industry opportunities. We get those scripts directly into the hands of industry decision-makers.
+          </p>
+          <p>
+            Our unique approach is totally non-standard — but so is our success rate in getting client projects seen by those who are in a position to option, buy, and greenlight script properties.
+          </p>
+          <ul>
+            <li>We know who's looking for specific ideas and niche-specific materials</li>
+            <li>We know who's looking for fresh styles and new voices</li>
+            <li>We know who's looking for their next possible project right now</li>
+            <li>We have established long-term relationships with media decision-makers worldwide</li>
+          </ul>
+          <a href="#contact" class="btn btn-primary">Explore Script Support</a>
+        </div>
+
+        <div class="script-panel dark">
+          <h3>What Makes Our Approach Different</h3>
+          <p>
+            Script writing contests, bulk emails, poorly formatted materials, amateur cover letters, random phone calls, and blind submissions to strangers are rarely successful. We have a unique system that gets scripts seen.
+          </p>
+          <ul>
+            <li>Direct access to decision-makers, not gatekeepers</li>
+            <li>Positioning before submission — presentation matters</li>
+            <li>Understanding of current industry trends and needs</li>
+            <li>Relationships built over decades of media industry work</li>
+            <li>Support for treatments, scripts, and book-to-screen projects</li>
+          </ul>
+          <a href="#contact" class="btn btn-outline-white">Request a Consultation</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       ACTORS & TALENT
+  ============================================================ -->
+  <section class="actors-section" id="actors">
+    <div class="container">
+      <div class="actors-inner">
+
+        <div>
+          <span class="eyebrow">Actors &amp; Career Professionals</span>
+          <h2 class="section-title">Visibility and Career Momentum for Actors and Talent</h2>
+          <p class="section-lead">
+            We have an amazing eye for future famous newcomers. Some of our past clients are now major A-list stars. Others are now working full-time in supporting roles — and we've helped hundreds of others get their first big break as working, professional actors.
+          </p>
+
+          <div class="actors-benefits">
+            <div class="actor-benefit">
+              <div class="actor-benefit-icon">📸</div>
+              <h4>Stronger Presentation</h4>
+              <p>Bad headshots, poorly structured resumes, and weak demo tapes will never get you in the door. We help good actors get prepared for real industry attention.</p>
+            </div>
+            <div class="actor-benefit">
+              <div class="actor-benefit-icon">🎯</div>
+              <h4>Agent &amp; Manager Access</h4>
+              <p>We personally know some of the top agents and managers in New York, LA, and regional markets around the world — and how to help you attract their attention.</p>
+            </div>
+            <div class="actor-benefit">
+              <div class="actor-benefit-icon">🌟</div>
+              <h4>Career Positioning</h4>
+              <p>Strategic promotional direction and career positioning for actors seeking stronger industry visibility and better opportunity creation.</p>
+            </div>
+            <div class="actor-benefit">
+              <div class="actor-benefit-icon">🎬</div>
+              <h4>Major Bookings</h4>
+              <p>Our clients have gone on to book major Feature Films, TV Shows, Soaps, and National Commercials — and some have become A-list household names.</p>
+            </div>
+          </div>
+
+          <a href="#contact" class="btn btn-primary mt-32" style="margin-top: 32px;">Build Your Visibility</a>
+        </div>
+
+        <div class="actors-visual">
+          <img class="actors-visual-img" src="assets/actors-talent.png" alt="Actor seated in a studio audition setting with talent materials" />
+          <p class="actors-visual-headline">
+            Without top-tier representation, you will not work. We help good actors sign agents and managers.
+          </p>
+          <ul class="actors-visual-list">
+            <li>Headshot and materials review &amp; improvement guidance</li>
+            <li>Demo reel and audition material consultation</li>
+            <li>Introduction pathways to top agents and managers</li>
+            <li>Feature Film, TV, Soap, and Commercial booking support</li>
+            <li>Strategic career positioning and promotional direction</li>
+            <li>Personal connection to industry representation in NY, LA, and worldwide</li>
+          </ul>
+          <a href="#contact" class="btn btn-outline-white">Start a Conversation</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CONTACT
+  ============================================================ -->
+  <section class="contact-section" id="contact">
+    <div class="container">
+      <div class="contact-inner">
+
+        <div class="contact-info">
+          <span class="eyebrow">Get in Touch</span>
+          <h2 class="section-title">Ready to Discuss Your Project or Career Goals?</h2>
+          <p class="section-lead">
+            Whether you are developing a film, positioning a script, building your acting career, or seeking strategic media industry guidance, StudioHouse Media can help you understand the next step.
+          </p>
+
+          <div class="contact-details">
+            <div class="contact-detail">
+              <div class="contact-detail-icon">🏢</div>
+              <div class="contact-detail-text">
+                <span class="contact-detail-label">Company</span>
+                <span class="contact-detail-val">StudioHouse Media</span>
+              </div>
+            </div>
+            <div class="contact-detail">
+              <div class="contact-detail-icon">📍</div>
+              <div class="contact-detail-text">
+                <span class="contact-detail-label">Locations</span>
+                <span class="contact-detail-val">Los Angeles &amp; New York</span>
+              </div>
+            </div>
+            <div class="contact-detail">
+              <div class="contact-detail-icon">🌐</div>
+              <div class="contact-detail-text">
+                <span class="contact-detail-label">Website</span>
+                <span class="contact-detail-val">
+                  <a href="https://studiohousemedia.com" target="_blank" style="color: rgba(255,255,255,0.7); transition: color 0.2s;">studiohousemedia.com</a>
+                </span>
+              </div>
+            </div>
+            <div class="contact-detail">
+              <div class="contact-detail-icon">📞</div>
+              <div class="contact-detail-text">
+                <span class="contact-detail-label">Phone</span>
+                <span class="contact-detail-val">[Contact number available on studiohousemedia.com]</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-form">
+          <h3>Request a Consultation</h3>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Full Name</label>
+              <input type="text" id="name" name="name" placeholder="Your name" />
+            </div>
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" name="email" placeholder="your@email.com" />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" name="phone" placeholder="(000) 000-0000" />
+            </div>
+            <div class="form-group">
+              <label for="role">Your Role / Profession</label>
+              <select id="role" name="role">
+                <option value="" disabled selected>Select your role</option>
+                <option>Producer</option>
+                <option>Director</option>
+                <option>Writer / Screenwriter</option>
+                <option>Actor</option>
+                <option>Talent Agent / Manager</option>
+                <option>Independent Filmmaker</option>
+                <option>Media Professional</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="project">Project Type</label>
+            <select id="project" name="project">
+              <option value="" disabled selected>Select project type</option>
+              <option>Feature Film Development</option>
+              <option>Script Sale / Positioning</option>
+              <option>Funding &amp; Capital Raising</option>
+              <option>Actor Career Development</option>
+              <option>Talent Agency Growth</option>
+              <option>Media Visibility / PR</option>
+              <option>Other / Multiple</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" placeholder="Tell us about your project, goals, or where you are right now..."></textarea>
+          </div>
+
+          <button type="button" class="btn btn-primary" style="width: 100%; justify-content: center;" onclick="handleFormSubmit()">Send Request</button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <img class="footer-logo" src="assets/studio-house-logo.png" alt="Studio House Los Angeles and New York" />
+          <p class="footer-brand-desc">
+            StudioHouse Media helps producers, writers, actors, directors, agencies, and media professionals build recognition, develop opportunities, and move projects forward. Our unique PR and promotions approach creates industry access, funding success, and career momentum.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="#services">Media Industry Consulting</a></li>
+            <li><a href="#funding">Development &amp; Funding</a></li>
+            <li><a href="#scripts">Script Sales Support</a></li>
+            <li><a href="#actors">Actors &amp; Talent</a></li>
+            <li><a href="#services">Talent Agencies</a></li>
+            <li><a href="#services">Celebrity &amp; Media</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#approach">Our Approach</a></li>
+            <li><a href="#who">Who We Help</a></li>
+            <li><a href="#films">Client Work</a></li>
+            <li><a href="#proof">Success Stories</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>External</h4>
+          <ul>
+            <li><a href="https://studiohousemedia.com" target="_blank" rel="noopener">studiohousemedia.com</a></li>
+            <li><a href="https://www.imdb.com" target="_blank" rel="noopener">IMDb Profile</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p class="footer-copy">&copy; 2025 StudioHouse Media. All rights reserved. Los Angeles &amp; New York.</p>
+        <a href="https://www.imdb.com" target="_blank" rel="noopener" class="footer-imdb">
+          <span>🎬</span> View on IMDb
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================================================
+       JAVASCRIPT
+  ============================================================ -->
+  <script>
+    // Sticky nav shadow on scroll
+    const nav = document.getElementById('site-nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 10);
+    });
+
+    // Mobile nav toggle
+    const toggle = document.getElementById('nav-toggle');
+    const mobileNav = document.getElementById('nav-mobile');
+    let open = false;
+
+    toggle.addEventListener('click', () => {
+      open = !open;
+      mobileNav.classList.toggle('open', open);
+      const spans = toggle.querySelectorAll('span');
+      if (open) {
+        spans[0].style.transform = 'translateY(6.5px) rotate(45deg)';
+        spans[1].style.opacity = '0';
+        spans[2].style.transform = 'translateY(-6.5px) rotate(-45deg)';
+      } else {
+        spans[0].style.transform = '';
+        spans[1].style.opacity = '';
+        spans[2].style.transform = '';
+      }
+    });
+
+    // Close mobile nav on link click
+    mobileNav.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        open = false;
+        mobileNav.classList.remove('open');
+        const spans = toggle.querySelectorAll('span');
+        spans[0].style.transform = '';
+        spans[1].style.opacity = '';
+        spans[2].style.transform = '';
+      });
+    });
+
+    // Form submit placeholder
+    function handleFormSubmit() {
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const message = document.getElementById('message').value.trim();
+
+      if (!name || !email) {
+        alert('Please fill in your name and email address to continue.');
+        return;
+      }
+
+      // Compose mailto
+      const subject = encodeURIComponent('Consultation Request – StudioHouse Media');
+      const body = encodeURIComponent(
+        `Name: ${name}\nEmail: ${email}\nMessage:\n${message}`
+      );
+      window.location.href = `mailto:contact@studiohousemedia.com?subject=${subject}&body=${body}`;
+    }
+
+    // Smooth reveal on scroll (optional, subtle)
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.08 });
+
+      document.querySelectorAll('.service-card, .who-card, .actor-benefit, .approach-step').forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(16px)';
+        el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        observer.observe(el);
+      });
+    }
+  </script>
+
+</body>
+</html>
